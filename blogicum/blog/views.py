@@ -32,5 +32,5 @@ def category_posts(request, category_slug):
     )
     return render(request, 'blog/category.html', {
         'category': category,
-        'post_list': filter_posts(category.post.all()),
+        'post_list': filter_posts(category.posts.all()),
     })
