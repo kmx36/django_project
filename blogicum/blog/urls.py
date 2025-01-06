@@ -7,9 +7,9 @@ app_name = 'blog'
 urlpatterns = [
     path('',
          views.PostListView.as_view(),
-         name='post_list'),
+         name='index'),
     path('<int:post_id>/',
-         views.PostDetailListView.as_view(),
+         views.PostDetailView.as_view(),
          name='post_detail'),
     path('create/',
          views.PostCreateView.as_view(),
@@ -32,6 +32,6 @@ urlpatterns = [
          name='delete_comment'),
 
     path('<slug:category_slug>/',
-         views.CategoryPostsListView.as_view(),
-         name='category_posts'),
+         views.CategoryListView.as_view(),
+         name='category'),
 ]

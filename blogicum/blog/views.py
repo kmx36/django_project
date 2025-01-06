@@ -1,37 +1,77 @@
-from django.shortcuts import get_object_or_404, render
-from django.utils import timezone
+# from django.shortcuts import get_object_or_404, render
+# from django.utils import timezone
+from django.views.generic import (
+    CreateView, DeleteView, DetailView, ListView, UpdateView
+)
+from django.urls import reverse_lazy
 
-from blog.models import Post, Category
-from .forms import PostForm
-
-
-def filter_posts(posts):
-    return posts.filter(
-        pub_date__lte=timezone.now(),
-        is_published=True,
-        category__is_published=True
-    )
+from blog.models import Post, Category, Comment
+from blog.forms import PostForm, CommentForm
 
 
-def index(request):
-    return render(request, 'blog/index.html', {
-        'posts': filter_posts(Post.objects.all())[:5]
-    })
+class PostListView(ListView):
+    pass
 
 
-def post_detail(request, post_id):
-    return render(request, 'blog/detail.html', {
-        'post': get_object_or_404(filter_posts(Post.objects.all()), pk=post_id)
-    })
+class PostDetailView(DetailView):
+    pass
 
 
-def category_posts(request, category_slug):
-    category = get_object_or_404(
-        Category.objects,
-        slug=category_slug,
-        is_published=True
-    )
-    return render(request, 'blog/category.html', {
-        'category': category,
-        'post_list': filter_posts(category.posts.all()),
-    })
+class PostCreateView(CreateView):
+    pass
+
+
+class PostUpdateView(UpdateView):
+    pass
+
+
+class PostDeleteView(DeleteView):
+    pass
+
+
+class CommentCreateView(CreateView):
+    pass
+
+
+class CommentUpdateView(UpdateView):
+    pass
+
+
+class CommentDeleteView(DeleteView):
+    pass
+
+
+class CategoryListView(ListView):
+    pass
+    
+
+# def filter_posts(posts):
+#     return posts.filter(
+#         pub_date__lte=timezone.now(),
+#         is_published=True,
+#         category__is_published=True
+#     )
+
+
+# def index(request):
+#     return render(request, 'blog/index.html', {
+#         'posts': filter_posts(Post.objects.all())[:5]
+#     })
+
+
+# def post_detail(request, post_id):
+#     return render(request, 'blog/detail.html', {
+#         'post': get_object_or_404(filter_posts(Post.objects.all()), pk=post_id)
+#     })
+
+
+# def category_posts(request, category_slug):
+#     category = get_object_or_404(
+#         Category.objects,
+#         slug=category_slug,
+#         is_published=True
+#     )
+#     return render(request, 'blog/category.html', {
+#         'category': category,
+#         'post_list': filter_posts(category.posts.all()),
+#     })

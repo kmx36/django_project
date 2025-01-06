@@ -81,6 +81,11 @@ class Post(PublishedModel):
         verbose_name='Категория',
         related_name='posts'
     )
+    image = models.ImageField(
+        'Фото',
+        upload_to='posts_images',
+        blank=True,
+    )
 
     class Meta:
         verbose_name = 'публикация'
@@ -89,3 +94,26 @@ class Post(PublishedModel):
 
     def __str__(self):
         return self.title[:20]
+
+
+class Comment(models.Model):
+    text = models.TextField('Текст комментария')
+    post = models.ForeignKey(
+        Post,
+        verbose_name='Комментарий',
+        on_delete=models.SET_NULL,
+    )
+    author = models.ForeignKey(
+        User,
+        verbose_name='Автор публикации',
+        on_delete=models.SET_NULL,
+    )
+
+    class Meta:
+        verbose_name = 'комментарий'
+        verbose_name_plural = 'Комментарии'
+        related_name = 'comments'
+        ordering = ('-pub_date',)
+
+    def __str__(self):
+        return self.text[:20]
